@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="HealthSync UI Showcase">
+  <title>HealthSync UI Showcase</title>
+  
+  <!-- Link to Google Fonts for a modern font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Root Variables for easy customization */
+    :root {
+      --bg-light: #f3f4f6;
+      --bg-dark: #0f172a;
+      --text-light: #1e293b;
+      --text-dark: #f8fafc;
+      --accent: #6366f1;
+      --card-bg-light: #ffffff;
+      --card-bg-dark: #1e293b;
+      --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease-in-out;
+    }
+
+    /* Body and Background */
+    body {
+      font-family: 'Roboto', sans-serif; /* Using Roboto font */
+      margin: 0;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    /* Header Styling */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 1rem;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 0 0 25px 25px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Dark Mode Toggle Button */
+    .toggle-dark {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 500;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .toggle-dark:hover {
+      background: #4f46e5;
+      transform: scale(1.1);
+    }
+
+    /* Navigation Bar Styling */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+
+    nav button {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      background: var(--accent);
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    nav button:hover {
+      background: #4f46e5;
+      transform: scale(1.05);
+    }
+
+    nav button.active {
+      background-color: #4f46e5;
+      transform: scale(1.05);
+    }
+
+    /* Card Grid Layout */
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 3rem;
+      gap: 2rem;
+    }
+
+    /* Card Styling */
+    .card {
+      width: 240px;
+      background: var(--card-bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      text-align: center;
+      cursor: pointer;
+      transform: scale(0.95);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    /* Dark Mode Cards */
+    body.dark .card {
+      background: var(--card-bg-dark);
+    }
+
+    /* Card Images */
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      transition: var(--transition);
+    }
+
+    /* Card Text */
+    .card span {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+    }
+
+    /* Card Hover Effects */
+    .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Active Card Animation */
+    .card.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Lightbox Modal Styling */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: var(--transition);
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 12px;
+      transition: var(--transition);
+    }
+
+    .lightbox:target {
+      display: flex;
+    }
+
+    /* Footer Styling */
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      font-size: 1rem;
+      color: rgba(0, 0, 0, 0.5);
+      background: #f3f4f6;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      .card {
+        width: 100%;
+        max-width: 90%;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .toggle-dark {
+        top: 2rem;
+        right: 2rem;
+      }
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="toggle-dark" onclick="toggleDark()">🌙</button>
+  <header>
+    <h1>📱 HealthSync UI Showcase</h1>
+    <p>Explore the app’s design screens and user flow.</p>
+  </header>
+
+  <nav>
+    <button onclick="filterCards('all')">All</button>
+    <button onclick="filterCards('Login')">Login</button>
+    <button onclick="filterCards('Home')">Home</button>
+    <button onclick="filterCards('Settings')">Settings</button>
+    <button onclick="filterCards('Onboarding')">Onboarding</button>
+    <button onclick="filterCards('Other')">Other</button>
+  </nav>
+
+  <div class="grid" id="cardGrid">
+    <!-- UI Cards with lazy loading -->
+    <div class="card Login"><a href="#img1"><img src="images/Splash.png" alt="Splash" loading="lazy"></a><span>Splash</span></div>
+    <div class="card Login"><a href="#img2"><img src="images/Login.png" alt="Login" loading="lazy"></a><span>Login</span></div>
+    <div class="card Login"><a href="#img3"><img src="images/Sign%20Up.png" alt="Sign Up" loading="lazy"></a><span>Sign Up</span></div>
+    <div class="card Home"><a href="#img4"><img src="images/Home.png" alt="Home" loading="lazy"></a><span>Home</span></div>
+    <div class="card Settings"><a href="#img5"><img src="images/Settings%20V1.png" alt="Settings V1" loading="lazy"></a><span>Settings V1</span></div>
+    <div class="card Settings"><a href="#img6"><img src="images/Settings%20V2.png" alt="Settings V2" loading="lazy"></a><span>Settings V2</span></div>
+    <div class="card Other"><a href="#img7"><img src="images/Empty%20State.png" alt="Empty State" loading="lazy"></a><span>Empty State</span></div>
+    <div class="card Other"><a href="#img8"><img src="images/Notification.png" alt="Notification" loading="lazy"></a><span>Notification</span></div>
+    <div class="card Other"><a href="#img9"><img src="images/No%20Connection%20Error.png" alt="No Connection" loading="lazy"></a><span>No Connection</span></div>
+    <div class="card Other"><a href="#img10"><img src="images/Text%20Box%20Active.png" alt="Text Box" loading="lazy"></a><span>Text Box</span></div>
+    <div class="card Onboarding"><a href="#img11"><img src="images/Onboarding%20-%201.png" alt="Onboarding 1" loading="lazy"></a><span>Onboarding 1</span></div>
+    <div class="card Onboarding"><a href="#img12"><img src="images/Onboarding%20-%202.png" alt="Onboarding 2" loading="lazy"></a><span>Onboarding 2</span></div>
+    <div class="card Onboarding"><a href="#img13"><img src="images/Onboarding%20-%203.png" alt="Onboarding 3" loading="lazy"></a><span>Onboarding 3</span></div>
+  </div>
+
+  <!-- Lightboxes -->
+  <div id="img1" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Splash.png" alt="Splash"></a></div>
+  <div id="img2" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Login.png" alt="Login"></a></div>
+  <div id="img3" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Sign%20Up.png" alt="Sign Up"></a></div>
+  <div id="img4" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Home.png" alt="Home"></a></div>
+  <div id="img5" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Settings%20V1.png" alt="Settings V1"></a></div>
+  <div id="img6" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Settings%20V2.png" alt="Settings V2"></a></div>
+  <div id="img7" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Empty%20State.png" alt="Empty State"></a></div>
+  <div id="img8" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Notification.png" alt="Notification"></a></div>
+  <div id="img9" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/No%20Connection%20Error.png" alt="No Connection"></a></div>
+  <div id="img10" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Text%20Box%20Active.png" alt="Text Box"></a></div>
+  <div id="img11" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Onboarding%20-%201.png" alt="Onboarding 1"></a></div>
+  <div id="img12" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Onboarding%20-%202.png" alt="Onboarding 2"></a></div>
+  <div id="img13" class="lightbox" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true"><a href="#" aria-label="Close"><img src="images/Onboarding%20-%203.png" alt="Onboarding 3"></a></div>
+
+  <footer>
+    Built with ❤️ by Baraa El-Mallah. <br>
+    Design in Figma. <br>
+    Code with HTML/CSS/JS. <br>
+    Icons: Flaticon.<br>
+    Assistant: ChatGPT.
+  </footer>
+
+  <script>
+    function toggleDark() {
+      document.body.classList.toggle("dark");
+    }
+
+    function filterCards(type) {
+      const buttons = document.querySelectorAll('nav button');
+      buttons.forEach(button => {
+        button.classList.remove('active');
+        if (button.textContent === type) {
+          button.classList.add('active');
+        }
+      });
+      
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.style.display = (type === 'all' || card.classList.contains(type)) ? 'block' : 'none';
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+  </script>
+</body>
+</html>
